@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XCOM: A Tribute</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #f4821f;
+      --blue:   #1a8fd1;
+      --dark:   #0a0e14;
+      --panel:  #0f1923;
+      --border: #1e3a50;
+      --text:   #c8d8e8;
+      --dim:    #6a8a9a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--dark);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    header {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 2rem;
+      background:
+        radial-gradient(ellipse at 50% 60%, rgba(26,143,209,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse at 20% 80%, rgba(244,130,31,0.08) 0%, transparent 50%),
+        var(--dark);
+    }
+
+    /* star-field */
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10%  15%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 25%  40%, #adf 0%, transparent 100%),
+        radial-gradient(1px 1px at 40%  8%,  #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 55%  30%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 70%  55%, #adf 0%, transparent 100%),
+        radial-gradient(1px 1px at 85%  20%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 5%   70%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 92%  75%, #adf 0%, transparent 100%),
+        radial-gradient(1px 1px at 33%  85%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 60%  90%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 78%  5%,  #adf 0%, transparent 100%),
+        radial-gradient(1px 1px at 15%  50%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 48%  62%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 88%  42%, #adf 0%, transparent 100%),
+        radial-gradient(1px 1px at 2%   30%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 95%  90%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 67%  14%, #adf 0%, transparent 100%),
+        radial-gradient(1px 1px at 37%  58%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 80%  68%, #fff 0%, transparent 100%),
+        radial-gradient(1px 1px at 50%  50%, #adf 0%, transparent 100%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* scan-line overlay */
+    header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.06) 3px,
+        rgba(0,0,0,0.06) 4px
+      );
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      opacity: 0.85;
+    }
+
+    h1 {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: clamp(3rem, 10vw, 7rem);
+      line-height: 1;
+      letter-spacing: 0.05em;
+      background: linear-gradient(135deg, #ffffff 30%, var(--orange) 60%, var(--blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(244,130,31,0.35));
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tagline {
+      margin-top: 1.2rem;
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--dim);
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tagline em {
+      color: var(--orange);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.4;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+      z-index: 1;
+    }
+    .scroll-hint span { font-size: 1.4rem; }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── LAYOUT ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
+
+    section { margin-bottom: 5rem; }
+
+    .section-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: #fff;
+      border-left: 3px solid var(--orange);
+      padding-left: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    p { color: var(--text); margin-bottom: 1rem; }
+
+    /* ── INTRO BOX ── */
+    .intro-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--orange);
+      border-radius: 4px;
+      padding: 2rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .intro-box::before {
+      content: 'XCOM';
+      position: absolute;
+      right: -0.5rem;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      font-family: 'Orbitron', monospace;
+      font-size: 5rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.02);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ── CARDS ── */
+    .era-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .era-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .era-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(26,143,209,0.15);
+    }
+
+    .era-card-header {
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .era-card-header.original { background: linear-gradient(90deg, rgba(244,130,31,0.25), transparent); border-top: 2px solid var(--orange); }
+    .era-card-header.modern   { background: linear-gradient(90deg, rgba(26,143,209,0.25), transparent); border-top: 2px solid var(--blue); }
+    .era-card-header.spinoff  { background: linear-gradient(90deg, rgba(150,80,200,0.25), transparent); border-top: 2px solid #9650c8; }
+
+    .era-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+
+    .era-card-header h3 {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+    .era-card-header small {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+    }
+
+    .era-card-body {
+      padding: 1rem 1.5rem 1.5rem;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+      color: var(--dim);
+    }
+    .meta-row strong { color: var(--text); }
+
+    /* ── GAME LIST ── */
+    .game-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .game-list li {
+      background: rgba(255,255,255,0.03);
+      border-left: 2px solid transparent;
+      border-radius: 2px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .game-list li:hover { background: rgba(255,255,255,0.06); }
+    .era-card.original-card .game-list li:hover { border-color: var(--orange); }
+    .era-card.modern-card   .game-list li:hover { border-color: var(--blue); }
+    .era-card.spinoff-card  .game-list li:hover { border-color: #9650c8; }
+
+    .game-year {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      float: right;
+      margin-top: 0.2rem;
+    }
+
+    /* ── LEGACY SECTION ── */
+    .legacy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .legacy-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: box-shadow 0.2s;
+    }
+    .legacy-card:hover { box-shadow: 0 4px 20px rgba(244,130,31,0.1); }
+
+    .legacy-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .legacy-card h4 {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .legacy-card p { font-size: 0.85rem; color: var(--dim); margin: 0; }
+
+    /* ── QUOTE ── */
+    blockquote {
+      border-left: 3px solid var(--blue);
+      margin: 2rem 0;
+      padding: 1rem 1.5rem;
+      background: var(--panel);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text);
+      border-radius: 0 4px 4px 0;
+    }
+    blockquote cite {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      font-style: normal;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.4rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--orange), var(--blue));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.65rem;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+      border: 2px solid var(--dark);
+      box-shadow: 0 0 6px var(--orange);
+    }
+    .timeline-item:nth-child(n+4)::before { background: var(--blue); box-shadow: 0 0 6px var(--blue); }
+
+    .timeline-year {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      color: var(--orange);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.1rem;
+    }
+    .timeline-item:nth-child(n+4) .timeline-year { color: var(--blue); }
+
+    .timeline-item h4 { font-size: 0.95rem; color: #fff; margin-bottom: 0.2rem; }
+    .timeline-item p  { font-size: 0.82rem; color: var(--dim); margin: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.78rem;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+    }
+    footer .footer-logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.15);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.3em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      main { padding: 2.5rem 1rem; }
+      .intro-box { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<header>
+  <p class="hero-badge">Extraterrestrial Combat Unit &mdash; Est. 1994</p>
+  <h1>XCOM</h1>
+  <p class="hero-tagline">Humanity's <em>last</em> line of defense</p>
+  <div class="scroll-hint">
+    <span>&#8595;</span>
+    <span>Scroll</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════ MAIN ════════════════════════════════ -->
+<main>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">// Overview</p>
+    <h2>What is XCOM?</h2>
+    <div class="intro-box">
+      <p>
+        XCOM is one of gaming's most celebrated tactical strategy franchises &mdash; a series that has challenged
+        players to manage a secret paramilitary organization defending Earth from alien invasion. Blending
+        turn-based tactical combat with base-building, resource management, and agonizing decision-making,
+        XCOM invented a genre and has inspired countless games in its wake.
+      </p>
+      <p>
+        From the lo-fi, isometric brilliance of the 1994 original to the polished cinematic tension of the modern
+        Firaxis era, XCOM has consistently asked the same question: <strong>can you save humanity when the odds are
+        overwhelmingly against you?</strong>
+      </p>
+      <p style="margin:0; color: var(--dim); font-size: 0.85rem;">
+        Permadeath. Overwatch. Panic. Chrysalids. The Geoscape. Two words that strike fear into veterans:
+        <em style="color: var(--orange);">mission failed.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- GAMES -->
+  <section id="games">
+    <p class="section-label">// Titles</p>
+    <h2>The Games</h2>
+    <div class="era-grid">
+
+      <!-- Original Series -->
+      <div class="era-card original-card">
+        <div class="era-card-header original">
+          <div class="era-icon">&#128128;</div>
+          <div>
+            <h3>Original Series</h3>
+            <small>1994 &ndash; 1998</small>
+          </div>
+        </div>
+        <div class="era-card-body">
+          <div class="meta-row">
+            <div><strong>Developer</strong><br>Mythos Games<br><span style="font-size:0.75rem">(Julian &amp; Nick Gollop)</span></div>
+            <div><strong>Publisher</strong><br>MicroProse</div>
+          </div>
+          <ul class="game-list">
+            <li>
+              <span class="game-year">1994</span>
+              <strong>UFO: Enemy Unknown</strong>
+              <br><span style="font-size:0.8rem;color:var(--dim)">aka X-COM: UFO Defense</span>
+            </li>
+            <li>
+              <span class="game-year">1995</span>
+              <strong>X-COM: Terror from the Deep</strong>
+              <br><span style="font-size:0.8rem;color:var(--dim)">The ocean depths hold new horrors</span>
+            </li>
+            <li>
+              <span class="game-year">1997</span>
+              <strong>X-COM: Apocalypse</strong>
+              <br><span style="font-size:0.8rem;color:var(--dim)">Urban warfare in Mega-Primus City</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Modern Series -->
+      <div class="era-card modern-card">
+        <div class="era-card-header modern">
+          <div class="era-icon">&#127760;</div>
+          <div>
+            <h3>Modern Series</h3>
+            <small>2012 &ndash; Present</small>
+          </div>
+        </div>
+        <div class="era-card-body">
+          <div class="meta-row">
+            <div><strong>Developer</strong><br>Firaxis Games</div>
+            <div><strong>Publisher</strong><br>2K Games</div>
+          </div>
+          <ul class="game-list">
+            <li>
+              <span class="game-year">2012</span>
+              <strong>XCOM: Enemy Unknown</strong>
+              <br><span style="font-size:0.8rem;color:var(--dim)">The celebrated modern reimagining</span>
+            </li>
+            <li>
+              <span class="game-year">2013</span>
+              <strong>XCOM: Enemy Within</strong>
+              <br><span style="font-size:0.8rem;color:var(--dim)">Expansion &mdash; MELD &amp; MECs</span>
+            </li>
+            <li>
+              <span class="game-year">2016</span>
+              <strong>XCOM 2</strong>
+              <br><span style="font-size:0.8rem;color:var(--dim)">Earth has fallen. Take it back.</span>
+            </li>
+            <li>
+              <span class="game-year">2020</span>
+              <strong>XCOM: Chimera Squad</strong>
+              <br><span style="font-size:0.8rem;color:var(--dim)">Post-war peacekeeping, integrated squads</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Spin-offs -->
+      <div class="era-card spinoff-card">
+        <div class="era-card-header spinoff">
+          <div class="era-icon">&#127918;</div>
+          <div>
+            <h3>Spin-offs &amp; Adjacent</h3>
+            <small>Other Entries</small>
+          </div>
+        </div>
+        <div class="era-card-body">
+          <div class="meta-row">
+            <div><strong>Developer</strong><br>Various</div>
+            <div><strong>Publisher</strong><br>2K Games</div>
+          </div>
+          <ul class="game-list">
+            <li>
+              <span class="game-year">2013</span>
+              <strong>The Bureau: XCOM Declassified</strong>
+              <br><span style="font-size:0.8rem;color:var(--dim)">Third-person shooter &mdash; 2K Marin<br>Set in 1960s Cold War America</span>
+            </li>
+            <li>
+              <span class="game-year">2018</span>
+              <strong>XCOM 2: War of the Chosen</strong>
+              <br><span style="font-size:0.8rem;color:var(--dim)">Expansion &mdash; the Chosen &amp; Resistance factions</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <p class="section-label">// History</p>
+    <h2>Key Milestones</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1994</div>
+        <h4>UFO: Enemy Unknown launches</h4>
+        <p>Julian &amp; Nick Gollop release the foundational classic through MicroProse, defining the tactical strategy genre.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1995</div>
+        <h4>Terror from the Deep</h4>
+        <p>The franchise dives underwater, introducing new terror &mdash; widely regarded as the most brutal entry in the series.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1997</div>
+        <h4>Apocalypse arrives</h4>
+        <p>A bold reinvention set in a dystopian mega-city, introducing real-time combat alongside the classic turn-based mode.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2012</div>
+        <h4>Firaxis reimagines XCOM</h4>
+        <p>XCOM: Enemy Unknown brings the franchise back to critical acclaim, introducing the series to a new generation of players.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2016</div>
+        <h4>XCOM 2 flips the script</h4>
+        <p>Humanity lost. Players now command a guerrilla resistance force, adding concealment mechanics and procedural maps.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2020</div>
+        <h4>Chimera Squad &mdash; a new direction</h4>
+        <p>A smaller, focused entry introducing breach mechanics and a diverse cast of human and alien operatives.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section id="quote">
+    <blockquote>
+      "The beauty of XCOM is that every death means something. You name your soldiers. You watch them grow.
+      And when a Chrysalid takes them in the dark, you feel it."
+      <cite>&mdash; The eternal experience of every XCOM commander</cite>
+    </blockquote>
+  </section>
+
+  <!-- LEGACY -->
+  <section id="legacy">
+    <p class="section-label">// Impact</p>
+    <h2>Legacy &amp; Influence</h2>
+    <div class="legacy-grid">
+      <div class="legacy-card">
+        <div class="legacy-icon">&#9876;&#65039;</div>
+        <h4>Permadeath</h4>
+        <p>Popularized permanent soldier death, raising emotional stakes and spawning a genre of "roguelite" tactics games.</p>
+      </div>
+      <div class="legacy-card">
+        <div class="legacy-icon">&#127970;</div>
+        <h4>Base Management</h4>
+        <p>The strategic layer &mdash; managing research, engineering, and global panic &mdash; became a blueprint for countless strategy titles.</p>
+      </div>
+      <div class="legacy-card">
+        <div class="legacy-icon">&#128200;</div>
+        <h4>Spiritual Successors</h4>
+        <p>Inspired Xenonauts, Battletech, Phoenix Point, Midnight Suns, and an entire wave of turn-based tactics games.</p>
+      </div>
+      <div class="legacy-card">
+        <div class="legacy-icon">&#127918;</div>
+        <h4>Modding Community</h4>
+        <p>Long War mods (Long War 1 &amp; 2) dramatically expanded both Enemy Within and XCOM 2, later hired by Firaxis as contractors.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════ FOOTER ══════════════════════════════ -->
+<footer>
+  <div class="footer-logo">X C O M</div>
+  <p>A tribute to 30+ years of alien combat &mdash; from the Geoscape to the Avenger.</p>
+  <p style="margin-top:0.4rem; font-size:0.7rem;">
+    Original series &copy; Mythos Games / MicroProse &nbsp;&bull;&nbsp;
+    Modern series &copy; Firaxis Games / 2K Games &nbsp;&bull;&nbsp;
+    Tribute page created with respect &amp; admiration.
+  </p>
+</footer>
+
+</body>
+</html>
