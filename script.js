@@ -22,11 +22,11 @@
 
   // ── Active nav highlight ──
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  const navLinkItems = document.querySelectorAll('.nav-links a');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        navLinks.forEach(a => {
+        navLinkItems.forEach(a => {
           a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
         });
       }
