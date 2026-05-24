@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Questions & Discussion
+    url: https://github.com/HighviewOne/xcom-tribute/discussions
+    about: Ask questions or share ideas about the tribute (general chat, not bugs).
+  - name: 🌐 Live Site
+    url: https://highviewone.github.io/xcom-tribute/
+    about: View the tribute page live.

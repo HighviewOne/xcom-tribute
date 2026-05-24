@@ -1,0 +1,43 @@
+name: ✨ Feature Request
+description: Suggest a new section, enhancement, or improvement.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "Got an idea to make the tribute better? We'd love to hear it!"
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+      description: What's missing or could be better? Is your request related to a problem?
+      placeholder: "It would be great if the site also covered..."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe what you'd like to see.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - Content (games, lore, history)
+        - Design / styling
+        - Accessibility
+        - Performance
+        - SEO / metadata
+        - New section
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any alternative approaches you've thought about.

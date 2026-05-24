@@ -1,0 +1,57 @@
+name: 🐛 Bug Report
+description: Report something broken or rendering incorrectly on the site.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for taking the time to file a report! Please fill out the details below."
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug.
+      placeholder: When I scroll to the Timeline section, the animations don't trigger...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce the issue?
+      placeholder: |
+        1. Open the site
+        2. Click on '...'
+        3. Scroll to '...'
+        4. See error
+    validations:
+      required: true
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device type
+      options:
+        - Desktop
+        - Mobile
+        - Tablet
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser & version
+      placeholder: "e.g. Chrome 124, Safari 17, Firefox 125"
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, drag and drop screenshots to help explain the problem.
