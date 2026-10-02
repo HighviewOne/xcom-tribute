@@ -31,7 +31,7 @@ The site is styled after a **classic 90s CRT terminal**: pixel fonts, phosphor-g
 
 - **🖥️ Authentic CRT aesthetic** — scanlines, flicker, phosphor glow, and the `VT323` pixel font.
 - **📱 Fully responsive** — optimized for desktop and mobile, with a collapsible nav.
-- **♿ Accessible** — skip link, `aria` attributes, keyboard focus states, and generous touch targets.
+- **♿ Accessible** — skip link, `aria` attributes, keyboard focus states, generous touch targets, and `prefers-reduced-motion` support (disables flicker and animations).
 - **🎯 Comprehensive content** — game history, core mechanics, key developers, a milestone timeline, and franchise legacy.
 - **⚡ Zero dependencies** — no bundler, no npm install, no server required.
 - **🔍 SEO-ready** — Open Graph tags, canonical URL, and JSON-LD structured data.
@@ -61,8 +61,9 @@ xcom-tribute/
 ├── index.html      # Page markup & content
 ├── styles.css      # CRT theme, layout, animations
 ├── script.js       # Nav toggle, scroll effects, animations
-├── favicon.svg      # Site icon
+├── favicon.svg     # Site icon
 ├── robots.txt
+├── sitemap.xml
 └── .github/        # Banner, issue & PR templates
 ```
 
