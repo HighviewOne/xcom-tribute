@@ -1,33 +1,38 @@
-  // ── Sticky nav border ──
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 10);
-  }, { passive: true });
-
   // ── Mobile nav toggle ──
   const navToggle = document.getElementById('nav-toggle');
   const navLinks = document.getElementById('nav-links');
+
+  function setNavOpen(isOpen) {
+    navLinks.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  }
+
   navToggle.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('open');
-    navToggle.setAttribute('aria-expanded', isOpen);
+    setNavOpen(!navLinks.classList.contains('open'));
   });
 
-  // Close mobile nav on link click
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', false);
-    });
+  // Close mobile nav on link click or Escape
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setNavOpen(false));
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+      setNavOpen(false);
+      navToggle.focus();
+    }
   });
 
   // ── Active nav highlight ──
   const sections = document.querySelectorAll('section[id]');
-  const navLinkItems = document.querySelectorAll('.nav-links a');
+  const navLinkItems = navLinks.querySelectorAll('a');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         navLinkItems.forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+          const isActive = a.getAttribute('href') === '#' + entry.target.id;
+          a.classList.toggle('active', isActive);
+          if (isActive) a.setAttribute('aria-current', 'location');
+          else a.removeAttribute('aria-current');
         });
       }
     });
@@ -47,7 +52,11 @@
 
   // ── Back to top ──
   const backBtn = document.getElementById('back-to-top');
-  window.addEventListener('scroll', () => {
-    backBtn.classList.toggle('visible', window.scrollY > 400);
-  }, { passive: true });
-  backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  const updateBackBtn = () => backBtn.classList.toggle('visible', window.scrollY > 400);
+  window.addEventListener('scroll', updateBackBtn, { passive: true });
+  updateBackBtn();
+  backBtn.addEventListener('click', () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    document.querySelector('.nav-logo').focus({ preventScroll: true });
+  });

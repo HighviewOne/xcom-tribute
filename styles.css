@@ -1,4 +1,20 @@
-    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+    /* VT323 is self-hosted (SIL OFL 1.1, see fonts/OFL.txt) */
+    @font-face {
+      font-family: 'VT323';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/vt323-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'VT323';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/vt323-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -28,6 +44,32 @@
       overflow-x: hidden;
     }
 
+    p + p { margin-top: 1rem; }
+
+    /* Keep anchored sections clear of the fixed nav */
+    section[id], #main-content { scroll-margin-top: calc(var(--nav-h) + 1rem); }
+
+    /* ═══════════════════════════════════════════════
+       ACCESSIBILITY
+    ═══════════════════════════════════════════════ */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      z-index: 3000;
+      padding: 0.5rem 1rem;
+      background: var(--x-yellow);
+      color: var(--dark);
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px dashed var(--x-yellow);
+      outline-offset: 3px;
+    }
+
     /* ═══════════════════════════════════════════════
        CRT & SCANLINES
     ═══════════════════════════════════════════════ */
@@ -42,33 +84,41 @@
       pointer-events: none;
     }
 
+    /* Flicker runs on a faint overlay instead of the whole page, so it stays
+       subtle (no full-page flashing) and doesn't force a page-wide repaint. */
     @keyframes flicker {
-      0% { opacity: 0.97; }
-      5% { opacity: 0.95; }
-      10% { opacity: 0.9; }
-      15% { opacity: 0.99; }
-      20% { opacity: 0.9; }
-      25% { opacity: 0.95; }
-      30% { opacity: 1; }
-      35% { opacity: 0.9; }
-      40% { opacity: 0.95; }
-      45% { opacity: 1; }
-      50% { opacity: 0.9; }
-      55% { opacity: 0.95; }
-      60% { opacity: 0.99; }
-      65% { opacity: 0.9; }
-      70% { opacity: 0.95; }
-      75% { opacity: 1; }
-      80% { opacity: 0.9; }
-      85% { opacity: 0.95; }
-      90% { opacity: 0.99; }
-      95% { opacity: 0.9; }
-      100% { opacity: 1; }
+      0%   { opacity: 0.02; }
+      20%  { opacity: 0.05; }
+      40%  { opacity: 0.01; }
+      60%  { opacity: 0.04; }
+      80%  { opacity: 0.02; }
+      100% { opacity: 0.03; }
     }
 
-    .crt-flicker {
-      animation: flicker 0.1s infinite;
+    .crt-flicker::after {
+      content: " ";
+      position: fixed;
+      inset: 0;
+      background: var(--dark);
+      z-index: 2001;
+      pointer-events: none;
+      animation: flicker 0.15s infinite;
     }
+
+    /* ═══════════════════════════════════════════════
+       HUD OVERLAY
+    ═══════════════════════════════════════════════ */
+    .hud {
+      position: fixed;
+      top: calc(var(--nav-h) + 10px);
+      color: var(--x-yellow);
+      font-size: 0.9rem;
+      z-index: 900;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    .hud-left  { left: 10px; }
+    .hud-right { right: 10px; text-align: right; }
 
     /* ═══════════════════════════════════════════════
        NAV
@@ -102,19 +152,38 @@
       list-style: none;
     }
     .nav-links a {
+      display: block;
       font-size: 1.2rem;
       text-transform: uppercase;
       color: var(--dim);
       text-decoration: none;
       padding: 0.2rem 0.5rem;
       border: 1px solid transparent;
-      transition: all 0.1s;
+      transition: color 0.1s, background 0.1s, border-color 0.1s;
     }
     .nav-links a:hover,
     .nav-links a.active {
       color: var(--x-yellow);
       background: var(--x-grey);
       border: 1px solid var(--x-yellow);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      width: 44px;
+      height: 44px;
+      padding: 8px;
+      background: var(--x-grey);
+      border: 2px solid var(--x-yellow);
+      cursor: pointer;
+    }
+    .nav-toggle span {
+      display: block;
+      height: 3px;
+      background: var(--x-yellow);
     }
 
     /* ═══════════════════════════════════════════════
@@ -128,14 +197,13 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 2rem;
-      background: 
+      padding: calc(var(--nav-h) + 2rem) 2rem 6rem;
+      background:
         radial-gradient(circle, transparent 20%, var(--dark) 20%, var(--dark) 80%, transparent 80%, transparent) 0% 0% / 64px 64px,
         radial-gradient(circle, transparent 20%, var(--dark) 20%, var(--dark) 80%, transparent 80%, transparent) 32px 32px / 64px 64px,
-        linear-gradient(var(--dim) 2px, transparent 2px) 0px -1px / 32px 32px,
-        linear-gradient(90deg, var(--dim) 2px, var(--dark) 2px) -1px 0px / 32px 32px;
+        linear-gradient(rgba(0, 136, 85, 0.8) 2px, transparent 2px) 0px -1px / 32px 32px,
+        linear-gradient(90deg, rgba(0, 136, 85, 0.8) 2px, var(--dark) 2px) -1px 0px / 32px 32px;
       background-color: var(--dark);
-      opacity: 0.8;
     }
 
     .hero-badge {
@@ -169,6 +237,19 @@
       justify-content: center;
     }
 
+    .scroll-hint {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--dim);
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
     .btn {
       font-family: 'VT323', monospace;
       font-size: 1.5rem;
@@ -179,24 +260,19 @@
       cursor: pointer;
       position: relative;
       background: var(--x-grey);
-      transition: all 0.1s;
+      transition: top 0.1s, left 0.1s, box-shadow 0.1s;
     }
     .btn-primary {
       color: var(--x-yellow);
       border-color: var(--x-yellow);
       box-shadow: 4px 4px 0 var(--dark), 7px 7px 0 var(--x-red);
     }
-    .btn-primary:active {
-      top: 4px;
-      left: 4px;
-      box-shadow: 0 0 0 var(--dark);
-    }
     .btn-ghost {
       color: var(--x-teal);
       border-color: var(--x-teal);
       box-shadow: 4px 4px 0 var(--dark), 7px 7px 0 var(--x-blue);
     }
-    .btn-ghost:active {
+    .btn:active {
       top: 4px;
       left: 4px;
       box-shadow: 0 0 0 var(--dark);
@@ -225,6 +301,8 @@
       display: inline-block;
     }
 
+    .section-intro { max-width: 680px; margin-bottom: 1.75rem; }
+
     .intro-box {
       border: 4px double var(--border);
       padding: 2rem;
@@ -241,11 +319,13 @@
       color: var(--x-yellow);
       font-size: 1rem;
     }
+    .intro-box .intro-kicker { color: var(--dim); font-size: 1.1rem; }
+    .intro-kicker em { color: var(--x-red); }
 
     /* ── CARDS ── */
     .era-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
       gap: 2rem;
     }
 
@@ -257,12 +337,27 @@
     }
 
     .era-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       border-bottom: 1px solid var(--border);
       margin-bottom: 1rem;
       padding-bottom: 0.5rem;
     }
+    .era-icon { font-size: 2rem; line-height: 1; }
     .era-card-header h3 { font-size: 1.8rem; color: var(--x-yellow); }
     .era-card-header small { color: var(--x-blue); font-size: 1rem; }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed var(--dim);
+    }
+    .meta-row strong { color: var(--x-blue); font-weight: normal; text-transform: uppercase; }
 
     .game-list { list-style: none; }
     .game-list li {
@@ -276,11 +371,13 @@
       left: 0;
       color: var(--x-yellow);
     }
+    .game-year { color: var(--x-yellow); margin-right: 0.4rem; }
+    .game-note { display: block; font-size: 1.1rem; color: var(--dim); }
 
     /* ── MECHANICS ── */
     .mechanics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
       gap: 1.5rem;
     }
 
@@ -292,6 +389,35 @@
     .mechanic-card h3 { color: var(--x-yellow); font-size: 1.6rem; margin-bottom: 0.5rem; }
     .mechanic-label { color: var(--x-red); font-size: 0.9rem; margin-bottom: 0.2rem; display: block; }
 
+    /* ── DEVELOPERS ── */
+    .dev-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+      gap: 1.5rem;
+    }
+    .dev-card {
+      display: flex;
+      gap: 1rem;
+      border: 2px solid var(--border);
+      background: var(--panel);
+      padding: 1rem;
+    }
+    .dev-avatar {
+      flex: 0 0 56px;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      border: 2px solid;
+      background: var(--x-grey);
+    }
+    .dev-avatar.orange { border-color: var(--x-red); }
+    .dev-avatar.blue   { border-color: var(--x-blue); }
+    .dev-info h3 { color: var(--x-yellow); font-size: 1.6rem; }
+    .dev-role { color: var(--x-blue); font-size: 1rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+
     /* ── TIMELINE ── */
     .timeline { border-left: 2px solid var(--border); padding-left: 1.5rem; }
     .timeline-item { margin-bottom: 2rem; position: relative; }
@@ -301,10 +427,11 @@
       height: 12px;
       background: var(--x-yellow);
       position: absolute;
-      left: -2.1rem;
+      left: calc(-1.5rem - 7px);
       top: 0.5rem;
     }
     .timeline-year { color: var(--x-yellow); font-size: 1.8rem; }
+    .timeline-item h3 { font-size: 1.5rem; font-weight: normal; color: var(--x-teal); text-transform: uppercase; }
 
     /* ── QUOTE ── */
     blockquote {
@@ -314,7 +441,22 @@
       font-style: italic;
       color: #fff;
     }
-    blockquote cite { color: var(--x-red); display: block; margin-top: 1rem; text-align: right; }
+    blockquote cite { color: var(--x-red); display: block; margin-top: 1rem; text-align: right; font-style: normal; }
+
+    /* ── LEGACY ── */
+    .legacy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+      gap: 1.5rem;
+    }
+    .legacy-card {
+      border: 1px solid var(--dim);
+      border-top: 4px solid var(--x-yellow);
+      background: var(--panel);
+      padding: 1rem;
+    }
+    .legacy-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .legacy-card h3 { color: var(--x-yellow); font-size: 1.5rem; margin-bottom: 0.4rem; }
 
     /* ── FOOTER ── */
     footer {
@@ -324,16 +466,24 @@
       background: var(--panel);
     }
     .footer-logo { font-size: 2rem; color: var(--x-yellow); margin-bottom: 1rem; }
+    .footer-legal { margin-top: 0.4rem; font-size: 1rem; color: var(--dim); }
 
     /* ── ANIMATIONS ── */
-    .fade-in { opacity: 0; transform: scale(0.95); transition: all 0.5s ease-out; }
-    .fade-in.visible { opacity: 1; transform: scale(1); }
+    /* Only hide content when JS is running to reveal it again */
+    .js .fade-in { opacity: 0; transform: scale(0.95); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+    .js .fade-in.visible { opacity: 1; transform: scale(1); }
+    .js .fade-in-delay-1 { transition-delay: 0.1s; }
+    .js .fade-in-delay-2 { transition-delay: 0.2s; }
+    .js .fade-in-delay-3 { transition-delay: 0.3s; }
+    .js .fade-in-delay-4 { transition-delay: 0.4s; }
 
     /* ── MISC ── */
     #back-to-top {
       position: fixed;
       bottom: 2rem;
       right: 2rem;
+      min-width: 44px;
+      min-height: 44px;
       background: var(--x-grey);
       border: 2px solid var(--x-yellow);
       color: var(--x-yellow);
@@ -342,9 +492,11 @@
       font-family: 'VT323', monospace;
       font-size: 1.5rem;
       z-index: 1001;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
     }
-
-    .nav-toggle { display: none; }
+    #back-to-top.visible { opacity: 1; visibility: visible; }
 
     @keyframes blink {
       0%, 100% { opacity: 1; }
@@ -353,8 +505,41 @@
     .blink { animation: blink 1s step-end infinite; }
 
     /* ── MOBILE ── */
+    @media (max-width: 1200px) {
+      .hud { display: none; }
+    }
+
+    @media (max-width: 760px) {
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: var(--nav-h);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: var(--dark);
+        border-bottom: 2px solid var(--border);
+        padding: 0.5rem 1rem 1rem;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 0.6rem 0.5rem; }
+    }
+
     @media (max-width: 600px) {
-      nav { flex-direction: column; height: auto; padding: 1rem; }
-      .nav-links { flex-wrap: wrap; justify-content: center; }
-      main { margin-top: 120px; }
+      main { padding: 1rem; margin-top: 2rem; }
+      h2 { font-size: 2.4rem; }
+      .hero-tagline { font-size: 1.6rem; }
+      .dev-card { flex-direction: column; }
+      footer { padding: 2rem 1rem; }
+      #back-to-top { bottom: 1rem; right: 1rem; }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .crt-flicker::after,
+      .blink { animation: none; }
+      .js .fade-in { opacity: 1; transform: none; transition: none; }
     }

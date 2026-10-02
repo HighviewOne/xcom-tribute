@@ -8,13 +8,18 @@
   <meta property="og:title" content="X-COM: A Tribute"/>
   <meta property="og:description" content="30+ years of humanity's last line of defense. A tribute to the XCOM franchise."/>
   <meta property="og:type" content="website"/>
-  <meta name="theme-color" content="#0a0e14"/>
+  <meta property="og:image" content="https://highviewone.github.io/xcom-tribute/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="X-COM: A Tribute — retro CRT-style title card"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta property="og:url" content="https://highviewone.github.io/xcom-tribute/"/>
+  <meta name="theme-color" content="#000000"/>
   <link rel="canonical" href="https://highviewone.github.io/xcom-tribute/">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/vt323-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js');</script>
   
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -26,9 +31,10 @@
     "url": "https://highviewone.github.io/xcom-tribute/",
     "creator": {
       "@type": "Person",
-      "name": "XCOM Tribute Creator"
+      "name": "HighviewOne",
+      "url": "https://github.com/HighviewOne"
     },
-    "datePublished": "2025-01-01",
+    "datePublished": "2026-03-06",
     "mentions": [
       {
         "@type": "VideoGame",
@@ -57,21 +63,21 @@
 </head>
 <body class="crt-flicker">
 
-<!-- Tactical Overlay -->
-<div style="position:fixed; top:10px; left:10px; color:var(--x-yellow); font-size:0.8rem; z-index:10000; pointer-events:none;">
-  LAT: 52.5200<br>LONG: 13.4050<br>ALT: 4500m
-</div>
-<div style="position:fixed; top:10px; right:10px; color:var(--x-yellow); font-size:0.8rem; z-index:10000; pointer-events:none; text-align:right;">
-  STATUS: DEFCON 3<br>SATELLITE: ACTIVE<br>SCANNING...
-</div>
-
 <!-- Skip to content link (keyboard accessibility) -->
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
+<!-- Tactical Overlay (decorative) -->
+<div class="hud hud-left" aria-hidden="true">
+  LAT: 52.5200<br>LONG: 13.4050<br>ALT: 4500m
+</div>
+<div class="hud hud-right" aria-hidden="true">
+  STATUS: DEFCON 3<br>SATELLITE: ACTIVE<br>SCANNING...
+</div>
+
 <!-- ═══════════════════════════════ NAV ════════════════════════════════ -->
-<nav id="navbar">
+<nav id="navbar" aria-label="Primary">
   <a href="#" class="nav-logo">X-<span>C</span>OM</a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
     <span></span><span></span><span></span>
   </button>
   <ul class="nav-links" id="nav-links">
@@ -88,19 +94,19 @@
 <header>
   <p class="hero-badge">Extraterrestrial Combat Unit &mdash; Est. 1994</p>
   <h1>X-COM</h1>
-  <p class="hero-tagline">Humanity's <em>last</em> line of defense<span class="blink">_</span></p>
+  <p class="hero-tagline">Humanity's <em>last</em> line of defense<span class="blink" aria-hidden="true">_</span></p>
   <div class="hero-cta">
     <a href="#games" class="btn btn-primary">Explore the Games</a>
     <a href="#about" class="btn btn-ghost">Learn More</a>
   </div>
-  <div class="scroll-hint">
+  <div class="scroll-hint" aria-hidden="true">
     <span>&#8595;</span>
     <span>Scroll</span>
   </div>
 </header>
 
 <!-- ═══════════════════════════════ MAIN ════════════════════════════════ -->
-<main id="main-content">
+<main id="main-content" tabindex="-1">
 
   <!-- ABOUT -->
   <section id="about">
@@ -118,9 +124,9 @@
         Firaxis era, XCOM has consistently asked the same question: <strong>can you save humanity when the odds are
         overwhelmingly against you?</strong>
       </p>
-      <p style="margin:0; color: var(--dim); font-size: 0.85rem;">
+      <p class="intro-kicker">
         Permadeath. Overwatch. Panic. Chrysalids. The Geoscape. Two words that strike fear into veterans:
-        <em style="color: var(--orange);">mission failed.</em>
+        <em>mission failed.</em>
       </p>
     </div>
   </section>
@@ -133,32 +139,32 @@
 
       <div class="era-card original-card fade-in fade-in-delay-1">
         <div class="era-card-header original">
-          <div class="era-icon">&#128128;</div>
+          <div class="era-icon" aria-hidden="true">&#128128;</div>
           <div>
             <h3>Original Series</h3>
-            <small>1994 &ndash; 1998</small>
+            <small>1994 &ndash; 1997</small>
           </div>
         </div>
         <div class="era-card-body">
           <div class="meta-row">
-            <div><strong>Developer</strong><br>Mythos Games<br><span style="font-size:0.75rem">(Julian &amp; Nick Gollop)</span></div>
+            <div><strong>Developer</strong><br>Mythos Games<span class="game-note">(Julian &amp; Nick Gollop)</span><span class="game-note">TFTD: MicroProse in-house</span></div>
             <div><strong>Publisher</strong><br>MicroProse</div>
           </div>
           <ul class="game-list">
             <li>
               <span class="game-year">1994</span>
               <strong>UFO: Enemy Unknown</strong>
-              <br><span style="font-size:0.8rem;color:var(--dim)">aka X-COM: UFO Defense</span>
+              <span class="game-note">aka X-COM: UFO Defense</span>
             </li>
             <li>
               <span class="game-year">1995</span>
               <strong>X-COM: Terror from the Deep</strong>
-              <br><span style="font-size:0.8rem;color:var(--dim)">The ocean depths hold new horrors</span>
+              <span class="game-note">The ocean depths hold new horrors</span>
             </li>
             <li>
               <span class="game-year">1997</span>
               <strong>X-COM: Apocalypse</strong>
-              <br><span style="font-size:0.8rem;color:var(--dim)">Urban warfare in Mega-Primus City</span>
+              <span class="game-note">Urban warfare in Mega-Primus City</span>
             </li>
           </ul>
         </div>
@@ -166,7 +172,7 @@
 
       <div class="era-card modern-card fade-in fade-in-delay-2">
         <div class="era-card-header modern">
-          <div class="era-icon">&#127760;</div>
+          <div class="era-icon" aria-hidden="true">&#127760;</div>
           <div>
             <h3>Modern Series</h3>
             <small>2012 &ndash; Present</small>
@@ -181,22 +187,27 @@
             <li>
               <span class="game-year">2012</span>
               <strong>XCOM: Enemy Unknown</strong>
-              <br><span style="font-size:0.8rem;color:var(--dim)">The celebrated modern reimagining</span>
+              <span class="game-note">The celebrated modern reimagining</span>
             </li>
             <li>
               <span class="game-year">2013</span>
               <strong>XCOM: Enemy Within</strong>
-              <br><span style="font-size:0.8rem;color:var(--dim)">Expansion &mdash; MELD &amp; MECs</span>
+              <span class="game-note">Expansion &mdash; MELD &amp; MECs</span>
             </li>
             <li>
               <span class="game-year">2016</span>
               <strong>XCOM 2</strong>
-              <br><span style="font-size:0.8rem;color:var(--dim)">Earth has fallen. Take it back.</span>
+              <span class="game-note">Earth has fallen. Take it back.</span>
+            </li>
+            <li>
+              <span class="game-year">2017</span>
+              <strong>XCOM 2: War of the Chosen</strong>
+              <span class="game-note">Expansion &mdash; the Chosen &amp; Resistance factions</span>
             </li>
             <li>
               <span class="game-year">2020</span>
               <strong>XCOM: Chimera Squad</strong>
-              <br><span style="font-size:0.8rem;color:var(--dim)">Post-war peacekeeping, integrated squads</span>
+              <span class="game-note">Post-war peacekeeping, integrated squads</span>
             </li>
           </ul>
         </div>
@@ -204,7 +215,7 @@
 
       <div class="era-card spinoff-card fade-in fade-in-delay-3">
         <div class="era-card-header spinoff">
-          <div class="era-icon">&#127918;</div>
+          <div class="era-icon" aria-hidden="true">&#127918;</div>
           <div>
             <h3>Spin-offs &amp; Adjacent</h3>
             <small>Other Entries</small>
@@ -213,18 +224,23 @@
         <div class="era-card-body">
           <div class="meta-row">
             <div><strong>Developer</strong><br>Various</div>
-            <div><strong>Publisher</strong><br>2K Games</div>
+            <div><strong>Publisher</strong><br>MicroProse / Hasbro / 2K</div>
           </div>
           <ul class="game-list">
             <li>
-              <span class="game-year">2013</span>
-              <strong>The Bureau: XCOM Declassified</strong>
-              <br><span style="font-size:0.8rem;color:var(--dim)">Third-person shooter &mdash; 2K Marin<br>Set in 1960s Cold War America</span>
+              <span class="game-year">1998</span>
+              <strong>X-COM: Interceptor</strong>
+              <span class="game-note">Space combat sim with a Geoscape-style strategy layer</span>
             </li>
             <li>
-              <span class="game-year">2018</span>
-              <strong>XCOM 2: War of the Chosen</strong>
-              <br><span style="font-size:0.8rem;color:var(--dim)">Expansion &mdash; the Chosen &amp; Resistance factions</span>
+              <span class="game-year">2001</span>
+              <strong>X-COM: Enforcer</strong>
+              <span class="game-note">Third-person action shooter</span>
+            </li>
+            <li>
+              <span class="game-year">2013</span>
+              <strong>The Bureau: XCOM Declassified</strong>
+              <span class="game-note">Third-person shooter &mdash; 2K Marin<br>Set in 1960s Cold War America</span>
             </li>
           </ul>
         </div>
@@ -237,37 +253,37 @@
   <section id="mechanics">
     <p class="section-label fade-in">// Gameplay</p>
     <h2 class="fade-in fade-in-delay-1">Core Mechanics</h2>
-    <p class="fade-in fade-in-delay-1" style="max-width:680px; margin-bottom:1.75rem;">
+    <p class="section-intro fade-in fade-in-delay-1">
       What separates XCOM from other strategy games is a tightly interlocked two-layer design &mdash; every
       decision on the battlefield ripples back to your base, and every resource choice shapes who goes into combat.
     </p>
     <div class="mechanics-grid">
-      <div class="mechanic-card fade-in fade-in-delay-1" data-glyph="&#9888;">
+      <div class="mechanic-card fade-in fade-in-delay-1">
         <div class="mechanic-label">Tactical Layer</div>
         <h3>Turn-Based Combat</h3>
-        <p>Each soldier acts on a two-action system &mdash; move and shoot, dash into cover, or hold position. Every choice carries life-or-death weight.</p>
+        <p>The originals spend Time Units on every step, turn, and shot; the Firaxis games distill this into two actions &mdash; move and shoot, dash into cover, or hold position. Every choice carries life-or-death weight.</p>
       </div>
-      <div class="mechanic-card fade-in fade-in-delay-2" data-glyph="&#9812;">
+      <div class="mechanic-card fade-in fade-in-delay-2">
         <div class="mechanic-label">Tactical Layer</div>
         <h3>Overwatch &amp; Flanking</h3>
         <p>Hold Overwatch to fire on moving enemies, or spend actions to flank them and strip cover bonuses. Positioning is everything.</p>
       </div>
-      <div class="mechanic-card fade-in fade-in-delay-3" data-glyph="&#128128;">
+      <div class="mechanic-card fade-in fade-in-delay-3">
         <div class="mechanic-label">Stakes</div>
         <h3>Permadeath</h3>
         <p>Soldiers die for good. You name them, watch them rank up, and grieve them. No reload removes the cost of a bad decision.</p>
       </div>
-      <div class="mechanic-card fade-in fade-in-delay-1" data-glyph="&#127760;">
+      <div class="mechanic-card fade-in fade-in-delay-1">
         <div class="mechanic-label">Strategic Layer</div>
         <h3>The Geoscape</h3>
         <p>Between missions, manage a global response network. Choose which countries to protect, intercept UFOs, and allocate satellites.</p>
       </div>
-      <div class="mechanic-card fade-in fade-in-delay-2" data-glyph="&#128200;">
+      <div class="mechanic-card fade-in fade-in-delay-2">
         <div class="mechanic-label">Strategic Layer</div>
         <h3>Research &amp; Engineering</h3>
         <p>Autopsies and salvage unlock new weapons, armor, and abilities. Falling behind on tech means losing soldiers to threats you can't match.</p>
       </div>
-      <div class="mechanic-card fade-in fade-in-delay-3" data-glyph="&#128680;">
+      <div class="mechanic-card fade-in fade-in-delay-3">
         <div class="mechanic-label">Pressure</div>
         <h3>Global Panic</h3>
         <p>Ignore a region and panic rises. Ignore it long enough and that country withdraws funding. XCOM can fail without a single soldier dying.</p>
@@ -281,7 +297,7 @@
     <h2 class="fade-in fade-in-delay-1">Key Developers</h2>
     <div class="dev-grid">
       <div class="dev-card fade-in fade-in-delay-1">
-        <div class="dev-avatar orange">&#128100;</div>
+        <div class="dev-avatar orange" aria-hidden="true">&#128100;</div>
         <div class="dev-info">
           <h3>Julian Gollop</h3>
           <div class="dev-role">Creator &mdash; Original Series</div>
@@ -289,7 +305,7 @@
         </div>
       </div>
       <div class="dev-card fade-in fade-in-delay-2">
-        <div class="dev-avatar orange">&#128100;</div>
+        <div class="dev-avatar orange" aria-hidden="true">&#128100;</div>
         <div class="dev-info">
           <h3>Nick Gollop</h3>
           <div class="dev-role">Co-Creator &mdash; Original Series</div>
@@ -297,7 +313,7 @@
         </div>
       </div>
       <div class="dev-card fade-in fade-in-delay-1">
-        <div class="dev-avatar blue">&#128100;</div>
+        <div class="dev-avatar blue" aria-hidden="true">&#128100;</div>
         <div class="dev-info">
           <h3>Jake Solomon</h3>
           <div class="dev-role">Lead Designer &mdash; Modern Series</div>
@@ -305,11 +321,11 @@
         </div>
       </div>
       <div class="dev-card fade-in fade-in-delay-2">
-        <div class="dev-avatar blue">&#128100;</div>
+        <div class="dev-avatar blue" aria-hidden="true">&#128100;</div>
         <div class="dev-info">
           <h3>Pavonis Interactive</h3>
           <div class="dev-role">Long War Modders</div>
-          <p>Originally known as "Long War Studios," this team created the acclaimed Long War mods for Enemy Within and XCOM 2 &mdash; dramatically expanding both games. Their work was so respected that Firaxis commissioned them to create official DLC content for XCOM 2.</p>
+          <p>Originally known as "Long War Studios," this team created the acclaimed Long War mods for Enemy Within and XCOM 2 &mdash; dramatically expanding both games. Their work was so respected that Firaxis commissioned them to build launch-day mods for XCOM 2, followed by Long War 2.</p>
         </div>
       </div>
     </div>
@@ -322,32 +338,42 @@
     <div class="timeline">
       <div class="timeline-item fade-in">
         <div class="timeline-year">1994</div>
-        <h4>UFO: Enemy Unknown launches</h4>
+        <h3>UFO: Enemy Unknown launches</h3>
         <p>Julian &amp; Nick Gollop release the foundational classic through MicroProse, defining the tactical strategy genre.</p>
       </div>
       <div class="timeline-item fade-in fade-in-delay-1">
         <div class="timeline-year">1995</div>
-        <h4>Terror from the Deep</h4>
+        <h3>Terror from the Deep</h3>
         <p>The franchise dives underwater, introducing new terror &mdash; widely regarded as the most brutal entry in the series.</p>
       </div>
       <div class="timeline-item fade-in fade-in-delay-2">
         <div class="timeline-year">1997</div>
-        <h4>Apocalypse arrives</h4>
+        <h3>Apocalypse arrives</h3>
         <p>A bold reinvention set in a dystopian mega-city, introducing real-time combat alongside the classic turn-based mode.</p>
       </div>
       <div class="timeline-item fade-in">
         <div class="timeline-year">2012</div>
-        <h4>Firaxis reimagines XCOM</h4>
+        <h3>Firaxis reimagines XCOM</h3>
         <p>Jake Solomon's XCOM: Enemy Unknown brings the franchise back to critical acclaim, introducing the series to a new generation.</p>
       </div>
       <div class="timeline-item fade-in fade-in-delay-1">
-        <div class="timeline-year">2016</div>
-        <h4>XCOM 2 flips the script</h4>
-        <p>Humanity lost. Players now command a guerrilla resistance force, adding concealment mechanics and procedural maps.</p>
+        <div class="timeline-year">2013</div>
+        <h3>Enemy Within expands the war</h3>
+        <p>The expansion adds MELD, gene-modded soldiers, MEC troopers, and the human EXALT faction working against XCOM from within.</p>
       </div>
       <div class="timeline-item fade-in fade-in-delay-2">
+        <div class="timeline-year">2016</div>
+        <h3>XCOM 2 flips the script</h3>
+        <p>Humanity lost. Players now command a guerrilla resistance force, adding concealment mechanics and procedural maps.</p>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-year">2017</div>
+        <h3>War of the Chosen</h3>
+        <p>XCOM 2's expansion introduces the Chosen &mdash; three hunters who stalk your squad &mdash; plus Resistance factions, soldier bonds, and fatigue.</p>
+      </div>
+      <div class="timeline-item fade-in fade-in-delay-1">
         <div class="timeline-year">2020</div>
-        <h4>Chimera Squad &mdash; a new direction</h4>
+        <h3>Chimera Squad &mdash; a new direction</h3>
         <p>A smaller, focused entry introducing breach mechanics and a diverse cast of human and alien operatives working together.</p>
       </div>
     </div>
@@ -356,9 +382,9 @@
   <!-- QUOTE -->
   <section id="quote">
     <blockquote class="fade-in">
-      "The beauty of XCOM is that every death means something. You name your soldiers. You watch them grow.
-      And when a Chrysalid takes them in the dark, you feel it."
-      <cite>&mdash; The eternal experience of every XCOM commander</cite>
+      The beauty of XCOM is that every death means something. You name your soldiers. You watch them grow.
+      And when a Chrysalid takes them in the dark, you feel it.
+      <cite>&mdash; Field notes, every XCOM commander (a tribute, not a quotation)</cite>
     </blockquote>
   </section>
 
@@ -368,24 +394,24 @@
     <h2 class="fade-in fade-in-delay-1">Legacy &amp; Influence</h2>
     <div class="legacy-grid">
       <div class="legacy-card fade-in fade-in-delay-1">
-        <div class="legacy-icon">&#9876;&#65039;</div>
-        <h4>Permadeath</h4>
+        <div class="legacy-icon" aria-hidden="true">&#9876;&#65039;</div>
+        <h3>Permadeath</h3>
         <p>Popularized permanent soldier death, raising emotional stakes and spawning a genre of "roguelite" tactics games.</p>
       </div>
       <div class="legacy-card fade-in fade-in-delay-2">
-        <div class="legacy-icon">&#127970;</div>
-        <h4>Base Management</h4>
+        <div class="legacy-icon" aria-hidden="true">&#127970;</div>
+        <h3>Base Management</h3>
         <p>The strategic layer &mdash; managing research, engineering, and global panic &mdash; became a blueprint for countless strategy titles.</p>
       </div>
       <div class="legacy-card fade-in fade-in-delay-3">
-        <div class="legacy-icon">&#128200;</div>
-        <h4>Spiritual Successors</h4>
+        <div class="legacy-icon" aria-hidden="true">&#128200;</div>
+        <h3>Spiritual Successors</h3>
         <p>Inspired Xenonauts, Battletech, Phoenix Point, Midnight Suns, and an entire wave of turn-based tactics games.</p>
       </div>
       <div class="legacy-card fade-in fade-in-delay-4">
-        <div class="legacy-icon">&#127918;</div>
-        <h4>Modding Community</h4>
-        <p>Long War mods dramatically expanded both Enemy Within and XCOM 2. Pavonis Interactive were later commissioned for official DLC.</p>
+        <div class="legacy-icon" aria-hidden="true">&#127918;</div>
+        <h3>Modding Community</h3>
+        <p>Long War mods dramatically expanded both Enemy Within and XCOM 2. Firaxis later commissioned Pavonis Interactive directly.</p>
       </div>
     </div>
   </section>
@@ -399,10 +425,10 @@
 <footer>
   <div class="footer-logo">X - C O M</div>
   <p>A tribute to 30+ years of alien combat &mdash; from the Geoscape to the Avenger.</p>
-  <p style="margin-top:0.4rem; font-size:0.7rem;">
+  <p class="footer-legal">
     Original series &copy; Mythos Games / MicroProse &nbsp;&bull;&nbsp;
     Modern series &copy; Firaxis Games / 2K Games &nbsp;&bull;&nbsp;
-    Tribute page created with respect &amp; admiration.
+    Unofficial, non-commercial fan tribute created with respect &amp; admiration.
   </p>
 </footer>
 

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://xcom-tribute.example.com/sitemap.xml
+Sitemap: https://highviewone.github.io/xcom-tribute/sitemap.xml

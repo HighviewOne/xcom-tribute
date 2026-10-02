@@ -25,15 +25,15 @@ XCOM is one of gaming's most celebrated tactical strategy franchises — challen
 
 The site is styled after a **classic 90s CRT terminal**: pixel fonts, phosphor-green glow, scanline flicker, and tactical overlays. No frameworks, no build step — just static HTML, CSS, and a sprinkle of vanilla JavaScript.
 
-> _"The beauty of XCOM is that every death means something. You name your soldiers. You watch them grow. And when a Chrysalid takes them in the dark, you feel it."_
+> _The beauty of XCOM is that every death means something. You name your soldiers. You watch them grow. And when a Chrysalid takes them in the dark, you feel it._
 
 ## ✨ Features
 
 - **🖥️ Authentic CRT aesthetic** — scanlines, flicker, phosphor glow, and the `VT323` pixel font.
 - **📱 Fully responsive** — optimized for desktop and mobile, with a collapsible nav.
-- **♿ Accessible** — skip link, `aria` attributes, keyboard focus states, and generous touch targets.
+- **♿ Accessible** — skip link, `aria` attributes, keyboard focus states, generous touch targets, and `prefers-reduced-motion` support (disables flicker and animations).
 - **🎯 Comprehensive content** — game history, core mechanics, key developers, a milestone timeline, and franchise legacy.
-- **⚡ Zero dependencies** — no bundler, no npm install, no server required.
+- **⚡ Zero dependencies** — no bundler, no npm install, no server required; the VT323 font is self-hosted, so the page makes no third-party requests.
 - **🔍 SEO-ready** — Open Graph tags, canonical URL, and JSON-LD structured data.
 
 ## 🚀 Getting Started
@@ -47,7 +47,7 @@ open index.html        # macOS
 # or: xdg-open index.html   (Linux) / start index.html (Windows)
 ```
 
-Prefer a local server (recommended for correct font preloading)?
+Prefer a local server (some browsers block local font files over `file://`)?
 
 ```bash
 python3 -m http.server 8000
@@ -61,8 +61,11 @@ xcom-tribute/
 ├── index.html      # Page markup & content
 ├── styles.css      # CRT theme, layout, animations
 ├── script.js       # Nav toggle, scroll effects, animations
-├── favicon.svg      # Site icon
+├── favicon.svg     # Site icon
+├── og-image.png    # 1200×630 social sharing card
+├── fonts/          # Self-hosted VT323 (SIL OFL 1.1)
 ├── robots.txt
+├── sitemap.xml
 └── .github/        # Banner, issue & PR templates
 ```
 
@@ -80,7 +83,7 @@ Contributions are welcome! Whether it's fixing a typo, correcting franchise lore
 | --- | --- |
 | **Original Series** | Mythos Games / MicroProse (Julian & Nick Gollop) |
 | **Modern Series** | Firaxis Games / 2K Games (Jake Solomon) |
-| **Fonts** | [Google Fonts](https://fonts.google.com/) — VT323 |
+| **Fonts** | [VT323](https://fonts.google.com/specimen/VT323) by Peter Hull — self-hosted under the [SIL Open Font License](fonts/OFL.txt) |
 | **Icons** | Unicode glyphs (lightweight, dependency-free) |
 
 ## ⚖️ License
